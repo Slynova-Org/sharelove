@@ -61,6 +61,11 @@ async function thanksDependencies () {
   query = ''
 
   Object.entries(repos).forEach(([alias, repo], index) => {
+    if (!repo) {
+      cannotStar.push(aliases[alias].name)
+      return
+    }
+
     if (!repo.viewerHasStarred) {
       query += `_${index}: addStar(input:{clientMutationId:"${alias}",starrableId:"${repo.id}"}){clientMutationId}\n`
       notStarred[alias] = repo
@@ -68,7 +73,7 @@ async function thanksDependencies () {
   })
 
   if (Object.keys(notStarred).length <= 0) {
-    console.log(`You already starred all your GitHub dependencies. ${emoji.get('heart')}`)
+    console.log(`You already starred all your GitHub dependencies. ${emoji.get('heart')}\n`)
   } else {
     await callGithubApi(`mutation{${query}}`)
 
@@ -77,13 +82,13 @@ async function thanksDependencies () {
     Object.entries(notStarred).forEach(([alias, repo]) => {
       console.log(`    - ${emoji.get('star')}  ${colors.blue(aliases[alias].name)}`)
     })
-
-    cannotStar.forEach(([name]) => {
-      console.log(`    - Cannot ${emoji.get('star')}  ${colors.blue(name)}  ${emoji.get('cry')}`)
-    })
-
-    console.log(`\nThanks to you! ${emoji.get('heart')}`)
   }
+
+  cannotStar.forEach((name) => {
+    console.log(`    - Cannot ${emoji.get('star')}  ${colors.blue(name)} ${emoji.get('cry')}`)
+  })
+
+  console.log(`\nThanks to you! ${emoji.get('heart')}`)
 
   process.exit()
 }
