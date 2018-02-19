@@ -8,6 +8,7 @@ const { dependencies, devDependencies } = require(join(process.cwd(), 'package.j
 
 const aliases = {}
 const notStarred = {}
+const cannotStar = []
 const allDependencies = Object.keys({ ...dependencies, ...devDependencies })
 
 if (!process.env.GITHUB_API_TOKEN) {
@@ -32,13 +33,19 @@ async function fetchPackagesInformation () {
     json: true,
   })
 
-  return Object.entries(body).map(([pkgName, pkgInfo]) => {
-    const url = pkgInfo.collected.metadata.repository.url.split('/')
-    const owner = url[3]
-    const repository = url[4].substring(0, url[4].lastIndexOf('.'))
+  return Object.entries(body).reduce((pkgs, [pkgName, pkgInfo]) => {
+    try {
+      const url = pkgInfo.collected.metadata.repository.url.split('/')
+      const owner = url[3]
+      const repository = url[4].substring(0, url[4].lastIndexOf('.'))
 
-    return { name: pkgName, owner, repository }
-  })
+      pkgs.push({ name: pkgName, owner, repository })
+    } catch (e) {
+      cannotStar.push(pkgName)
+    }
+
+    return pkgs
+  }, [])
 }
 
 async function thanksDependencies () {
@@ -69,6 +76,10 @@ async function thanksDependencies () {
 
     Object.entries(notStarred).forEach(([alias, repo]) => {
       console.log(`    - ${emoji.get('star')}  ${colors.blue(aliases[alias].name)}`)
+    })
+
+    cannotStar.forEach(([name]) => {
+      console.log(`    - Cannot ${emoji.get('star')}  ${colors.blue(name)}  ${emoji.get('cry')}`)
     })
 
     console.log(`\nThanks to you! ${emoji.get('heart')}`)
