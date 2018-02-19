@@ -1,0 +1,26 @@
+{
+  "name": "sharelove",
+  "version": "1.0.0",
+  "description": "Give thanks (in the form of a GitHub ★) to your fellow JS package maintainers.",
+  "keywords": [
+    "thanks",
+    "stars",
+    "github",
+    "dependencies"
+  ],
+  "author": "Romain Lanz <romain.lanz@slynova.ch>",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "got": "^8.2.0",
+    "node-emoji": "^1.8.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Slynova-Org/sharelove"
+  },
+  "bugs": {
+    "url": "https://github.com/Slynova-Org/sharelove/issues"
+  }
+}
