@@ -1,4 +1,4 @@
-'use strict'
+#!/usr/bin/env node
 
 const got = require('got')
 const { join } = require('path')

@@ -1,6 +1,6 @@
 {
   "name": "sharelove",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Give thanks (in the form of a GitHub ★) to your fellow JS package maintainers.",
   "keywords": [
     "thanks",
