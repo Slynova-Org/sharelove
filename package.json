@@ -1,6 +1,6 @@
 {
   "name": "sharelove",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Give thanks (in the form of a GitHub ★) to your fellow JS package maintainers.",
   "keywords": [
     "thanks",
@@ -9,8 +9,9 @@
     "dependencies"
   ],
   "author": "Romain Lanz <romain.lanz@slynova.ch>",
-  "main": "index.js",
   "license": "MIT",
+  "main": "index.js",
+  "bin": "index.js",
   "dependencies": {
     "colors": "^1.1.2",
     "got": "^8.2.0",
